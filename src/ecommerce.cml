@@ -1,0 +1,56 @@
+// Definición de Contexto Principal para el Sistema de Ecommerce
+ContextMap AcmeEcommerceMap{
+    contains DiccionarioProcesosContext
+    contains DiccionarioMoldesContext
+    contains GestionUsuriosContext
+    contains GestionEnviosContext
+    contains GestionClientesContext
+    contains GestionPagosContext
+    contains GestionVentasContext
+    contains GestionMateriaPrimaContext
+    contains GestionPedidosContext
+    contains GestionProduccionContext
+    /* Cooperación */
+    GestionClientesContext [P]<->[P] GestionEnviosContext
+    GestionPedidosContext [P]<->[P] GestionClientesContext
+    GestionPedidosContext [P]<->[P] GestionPagosContext
+    GestionProduccionContext [P]<->[P] DiccionarioProcesosContext
+    GestionProduccionContext [P]<->[P] DiccionarioMoldesContext
+    GestionProduccionContext [P]<->[P] GestionUsuriosContext
+    GestionProduccionContext [P]<->[P] GestionMateriaPrimaContext
+    GestionPagosContext [P]<->[P] GestionVentasContext
+    GestionPedidosContext [P]<->[P] GestionVentasContext
+    GestionVentasContext [P]<->[P] GestionUsuriosContext
+
+
+    /* Conformista */
+    GestionUsuriosContext [CF]<-[PL] GestionMateriaPrimaContext
+    /* Anti-corruption layer */
+    /* Open-Host service */
+    GestionProduccionContext [U, OHS]->[D] GestionPedidosContext
+    /*Cliente/Proveedor*/
+    GestionUsuriosContext [D , C]<-[U , S] GestionClientesContext
+}
+
+BoundedContext GestionEnviosContext {
+}
+BoundedContext GestionClientesContext {
+}
+BoundedContext GestionPagosContext {
+}
+BoundedContext GestionMateriaPrimaContext {
+}
+BoundedContext DiccionarioProcesosContext {
+}
+BoundedContext DiccionarioMoldesContext {
+}
+BoundedContext GestionUsuriosContext {
+}
+BoundedContext GestionVentasContext {
+}
+BoundedContext GestionPedidosContext {
+}
+BoundedContext GestionProduccionContext {
+}
+BoundedContext CatalogProductosContext {
+}
